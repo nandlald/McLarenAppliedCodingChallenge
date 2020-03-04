@@ -1,0 +1,16 @@
+function output = SatelliteSim(parameters, settings)
+
+object = FallingObjects.Satellite(parameters.mass, parameters.length, parameters.Cd);
+
+gField = GravityField.Newtonian(parameters.mEarth, parameters.rEarth);
+
+atmos = Atmosphere.DryAir();
+
+sim = FreeFallingDynamics(object, gField, atmos);
+
+[output.x, output.v, output.a, output.t] = RunDynamics(sim, ...
+                                             settings.x0, ...
+                                             settings.v0, ...
+                                             settings.tStart, ...
+                                             settings.tInc, ...
+                                             settings.tEnd);
